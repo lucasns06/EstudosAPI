@@ -11,7 +11,9 @@ namespace TarefasApi.Models
         public int Id { get; set; }
         public DateTime Data { get; set; }
         public string Nome {get; set; } = string.Empty;
-        public PrioridadeEnum prioridade;
+        public PrioridadeEnum Prioridade;
         public bool Completo {get; set; }
+        public int ProjetoId { get; set; }
+        public Projeto Projeto { get; set; }
     }
 }

@@ -4,21 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TarefasApi.Data;
 using TarefasApi.Models;
 
 namespace TarefasApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProjetosController : ControllerBase
     {
-    //    private readonly DbContext _context;
+        //Crud
+        private readonly DataContext _context;
+        public ProjetosController(DataContext context)
+        {
+            _context = context;
+        }
 
-    //     [HttpPost("Adicionar")]
-    //     public async Task<IActionResult> AdicionarProjeto(Projeto projeto){
-    //     //      _context.Projetos.Add(projeto); // Supondo que 'Projetos' seja a DbSet correspondente
-    //     //     await _context.SaveChangesAsync();
-    //     //     return Ok();
-    //     }
+        [HttpGet]
+        public async Task<IActionResult> GetProjeto()
+        {
+            var projetos = await _context.TB_PROJETOS.Include(p => p.Tarefas).ToListAsync(); return Ok(projetos);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Projeto>> GetProjectById(int id)
+        {
+            var projeto = await _context.TB_PROJETOS.Include(p => p.Tarefas).FirstOrDefaultAsync(p => p.Id == id);
+            if (projeto == null) { return NotFound(); }
+            return Ok(projeto);
+        }
+        [HttpPost]
+        public async Task<ActionResult<Projeto>> PostProject(Projeto projeto)
+        {
+            _context.TB_PROJETOS.Add(projeto); await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Projeto.Id), new { id = projeto.Id }, projeto);
+        }
     }
 }
