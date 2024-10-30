@@ -10,7 +10,7 @@ using TarefasApi.Models;
 namespace TarefasApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ProjetosController : ControllerBase
     {
         //Crud
@@ -26,7 +26,7 @@ namespace TarefasApi.Controllers
             var projetos = await _context.TB_PROJETOS.Include(p => p.Tarefas).ToListAsync(); return Ok(projetos);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Projeto>> GetProjectById(int id)
+        public async Task<ActionResult> GetProjectById(int id)
         {
             var projeto = await _context.TB_PROJETOS.Include(p => p.Tarefas).FirstOrDefaultAsync(p => p.Id == id);
             if (projeto == null) { return NotFound(); }
