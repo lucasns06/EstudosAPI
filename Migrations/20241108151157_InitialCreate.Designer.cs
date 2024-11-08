@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TarefasApi.Data;
 
@@ -11,9 +12,11 @@ using TarefasApi.Data;
 namespace TarefasApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241108151157_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,32 +49,6 @@ namespace TarefasApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TB_TAREFAS", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Completo = false,
-                            Data = new DateTime(2024, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Nome = "Estudar Matemática",
-                            Prioridade = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Completo = false,
-                            Data = new DateTime(2024, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Nome = "Revisar Física",
-                            Prioridade = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Completo = false,
-                            Data = new DateTime(2024, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Nome = "Ler sobre Química",
-                            Prioridade = 0
-                        });
                 });
 #pragma warning restore 612, 618
         }
