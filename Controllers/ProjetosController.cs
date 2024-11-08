@@ -35,8 +35,16 @@ namespace TarefasApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Projeto>> PostProject(Projeto projeto)
         {
-            _context.TB_PROJETOS.Add(projeto); await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Projeto.Id), new { id = projeto.Id }, projeto);
+            foreach (var tarefa in projeto.Tarefas)
+            {
+                _context.Entry(tarefa).State = EntityState.Added;
+            }
+
+            _context.TB_PROJETOS.Add(projeto);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(PostProject), new { id = projeto.Id }, projeto);
         }
+
     }
 }

@@ -26,11 +26,15 @@ namespace TarefasApi.Data
                 .WithMany(t => t.Tarefas)
                 .HasForeignKey(p => p.ProjetoId);
 
+            modelBuilder.Entity<Tarefa>()
+                 .Property(t => t.Prioridade)
+                 .IsRequired();
+
             modelBuilder.Entity<Tarefa>().HasData(
                 new Tarefa { Id = 1, Data = new DateTime(2024, 11, 28), Prioridade = Models.Enums.PrioridadeEnum.ALTA, Completo = false, Nome = "Equacoes", ProjetoId = 1 },
                 new Tarefa { Id = 2, Data = new DateTime(2024, 11, 20), Prioridade = Models.Enums.PrioridadeEnum.MEDIA, Completo = false, Nome = "Potencia", ProjetoId = 1 },
                 new Tarefa { Id = 3, Data = new DateTime(2024, 11, 10), Prioridade = Models.Enums.PrioridadeEnum.ALTA, Completo = false, Nome = "Revisao", ProjetoId = 2 }
-            
+
             );
 
             modelBuilder.Entity<Projeto>().HasData(
@@ -39,7 +43,7 @@ namespace TarefasApi.Data
             );
 
             modelBuilder.Entity<Usuario>().HasData(
-                new Usuario {Id = 1,  Nome = "Lucas"}
+                new Usuario { Id = 1, Nome = "Lucas" }
             );
 
             base.OnModelCreating(modelBuilder);
