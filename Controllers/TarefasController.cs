@@ -25,15 +25,35 @@ namespace TarefasApi.Controllers
         public async Task<ActionResult> GetTarefas() //Async: método assincrono
         {
 
-            List<Tarefa> lista = await _context.TB_TAREFAS.ToListAsync(); // Retorna todas as tarefas
+            var lista = await _context.TB_TAREFAS
+            .Include(t => t.Categoria)
+             .Select(t => new
+             {
+                 t.Id,
+                 t.DataTermino,
+                 t.Nome,
+                 t.Prioridade,
+                 t.Completo,
+                 t.CategoriaId,
+                 Categoria = new
+                 {
+                     t.Categoria.Id,
+                     t.Categoria.Nome
+                 }
+             })
+            .ToListAsync();
+             // Retorna todas as tarefas
             return Ok(lista);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTarefa(int id)
         {
-            Tarefa a = await _context.TB_TAREFAS.FirstOrDefaultAsync(aBusca => aBusca.Id == id);
-            return Ok(a);
+            Tarefa lista = await _context.TB_TAREFAS
+            .Include(t => t.Categoria)
+            .FirstOrDefaultAsync(t => t.Id == id);
+
+            return Ok(lista);
         }
 
         // Adicionar uma nova tarefa
@@ -43,28 +63,28 @@ namespace TarefasApi.Controllers
             try
             {
                 if (tarefa.Completo == true)
-            {
-                throw new Exception("Não faz sentido criar uma tarefa completa.");
-            }
+                {
+                    throw new Exception("Não faz sentido criar uma tarefa completa.");
+                }
 
-            if (string.IsNullOrEmpty(tarefa.Nome))
-            {
-                throw new Exception("O nome da tarefa não pode ser vazio.");
-            }
-            await _context.TB_TAREFAS.AddAsync(tarefa);
-            await _context.SaveChangesAsync();
+                if (string.IsNullOrEmpty(tarefa.Nome))
+                {
+                    throw new Exception("O nome da tarefa não pode ser vazio.");
+                }
+                await _context.TB_TAREFAS.AddAsync(tarefa);
+                await _context.SaveChangesAsync();
 
-            return Ok(tarefa.Id);
+                return Ok(tarefa.Id);
 
             }
             catch (Exception ex)
             {
-                 return BadRequest(ex.Message + " - " + ex.InnerException?.Message);
+                return BadRequest(ex.Message + " - " + ex.InnerException?.Message);
             }
         }
 
         // Atualizar uma tarefa existente
-       [HttpPut]
+        [HttpPut]
         public async Task<IActionResult> Update(Tarefa novaTarefa)
         {
             try
@@ -81,7 +101,7 @@ namespace TarefasApi.Controllers
         }
 
         // Remover uma tarefa
-       [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

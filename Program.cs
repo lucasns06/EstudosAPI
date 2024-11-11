@@ -34,7 +34,7 @@ app.UseRouting();
 // Mapeia todos os controladores
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
+    _ = endpoints.MapControllers();
 });
 
 var summaries = new[]

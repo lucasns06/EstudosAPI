@@ -15,6 +15,9 @@ namespace TarefasApi.Models
     public string Nome { get; set; } = string.Empty;
     public PrioridadeEnum Prioridade { get; set; }
     public bool Completo { get; set; } = false;
+
+    public int CategoriaId { get; set; }
+    public Categoria Categoria { get; set; }
 }
 
 }
