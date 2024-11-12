@@ -11,7 +11,7 @@ using TarefasApi.Models;
 namespace TarefasApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TarefasController : ControllerBase // Herda da ControllerBase, a classe que vai lidar com requisições HTTP e fornecer respostas.
     {
         private readonly DataContext _context; //DataContext é a classe que vai gerar a conexão com o banco de dados.

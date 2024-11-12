@@ -59,7 +59,7 @@ namespace TarefasApi.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AtualizarCategoria(Categoria categoria)
+        public async Task<IActionResult> PostCategoria(Categoria categoria)
         {
             try
             {
@@ -91,6 +91,21 @@ namespace TarefasApi.Controllers
                 Categoria categoriaRemover = await _context.TB_CATEGORIAS.FirstOrDefaultAsync(p => p.Id == id);
 
                 _context.TB_CATEGORIAS.Remove(categoriaRemover);
+                int linhaAfetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhaAfetadas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message + " - " + ex.InnerException);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> PutById(Categoria novaCategoria)
+        {
+            try
+            {
+                _context.TB_CATEGORIAS.Update(novaCategoria);
                 int linhaAfetadas = await _context.SaveChangesAsync();
 
                 return Ok(linhaAfetadas);
