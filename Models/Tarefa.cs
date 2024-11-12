@@ -17,7 +17,8 @@ namespace TarefasApi.Models
     public bool Completo { get; set; } = false;
 
     public int CategoriaId { get; set; }
-    public Categoria Categoria { get; set; }
+    [JsonIgnore]
+    public Categoria? Categoria { get; set; }
 }
 
 }
