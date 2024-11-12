@@ -1,56 +1,66 @@
-# API de Gerenciamento de Tarefas
+# Estudos API
 
-Esta é uma **API RESTful** construída utilizando **ASP.NET Core**, responsável por gerenciar tarefas em uma aplicação. O objetivo principal dessa API é permitir a criação, leitura, atualização e exclusão de tarefas de forma simples e eficiente, utilizando os padrões HTTP.
+Esta é a API de Estudos, um projeto para gerenciar tarefas associadas a categorias. O projeto utiliza ASP.NET Core e Entity Framework Core.
 
-## Funcionalidades
+## Estrutura do Projeto
 
-A API oferece os seguintes endpoints:
+A API é composta por duas entidades principais:
 
-- **GET /tarefas**: Retorna uma lista de todas as tarefas cadastradas.
-- **GET /tarefas/{id}**: Retorna uma tarefa específica com base no `id` fornecido.
-- **POST /tarefas**: Permite adicionar uma nova tarefa à lista.
-- **PUT /tarefas/{id}**: Atualiza os dados de uma tarefa existente com base no `id` fornecido.
-- **DELETE /tarefas/{id}**: Remove uma tarefa específica utilizando o `id`.
+**Categoria**:
+- nome
 
-## Tecnologias Utilizadas
+**Tarefa**:
+- nome
+- DataTermino
+- Prioridade
+- BoolCompleto
 
-- **ASP.NET Core**: Framework para construção de APIs.
-- **Entity Framework Core**: ORM utilizado para comunicação com o banco de dados.
-- **SQL Server** (ou outro banco de dados configurado): Armazenamento das informações das tarefas.
+## End Points
 
-## Como Rodar o Projeto
+### Categorias
 
-### Pré-requisitos
+**GET /Categorias/GetAll:** Retorna todas as categorias
 
-- **.NET 7.0** ou superior
-- **SQL Server** ou outro banco de dados compatível
+**GET /Categorias/{id}** Retorna uma categoria por id
 
-### Passos para rodar a API:
+**DELETE /Categorias/{id}** Deleta uma categoria por id
 
-1. Clone este repositório para o seu computador:
-   ```bash
+**POST /Categorias** Cria uma categoria
+
+**PUT /Categorias** Edita uma categoria
+
+### Tarefas
+
+**GET /Tarefas/GetAll:** Retorna todas as Tarefas
+
+**GET /Tarefas/{id}** Retorna uma Tarefa por id
+
+**DELETE /Tarefas/{id}** Deleta uma Tarefa por id
+
+**POST /Tarefas** Cria uma Tarefa
+
+**PUT /Tarefas** Edita uma Tarefa
+
+## Como rodar o projeto
+
+Clone este repositório:
+
+```bash
    git clone https://github.com/lucasns06/EstudosAPI.git
-   ```
+```
 
-2. Navegue até a pasta do projeto:
-   ```bash
-   cd EstudosAPI
-   ```
+Configure o caminho do banco de dados no arquivo appsettings.json.
 
-3. Instale as dependências do projeto:
-   ```bash
-   dotnet restore
-   ```
-
-4. Aplique as migrações do banco de dados:
-   ```bash
+Atualize o banco de dados
+```bash
    dotnet ef database update
-   ```
+```
 
-5. Execute o projeto:
-   ```bash
+E depois
+
+```bash
    dotnet run
-   ```
+```
 
-Agora a API estará rodando localmente.
+
 
