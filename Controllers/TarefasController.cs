@@ -21,6 +21,10 @@ namespace TarefasApi.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Esse método pega todas as tarefas
+        /// </summary>
+        /// <returns>Retornar todas as tarefas</returns>
         [HttpGet("GetAll")]
         public async Task<ActionResult> GetTarefas() //Async: método assincrono
         {

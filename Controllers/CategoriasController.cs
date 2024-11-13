@@ -19,7 +19,10 @@ namespace TarefasApi.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// testando 
+        /// </summary>
+        /// <returns>testando 2</returns>
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

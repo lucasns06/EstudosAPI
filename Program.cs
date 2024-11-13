@@ -1,16 +1,27 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TarefasApi.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<DataContext>(options => 
+builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoSomee"));
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Estudos API",
+        Version = "v1",
+        Description = "Essa API é um planejamento de estudos, tal qual você cria e gerencia Tarefas, dentro de categorias."
+    });
+}
+);
 builder.Services.AddControllers();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -22,8 +33,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API Exemplo v1");
+        });
 }
 
 app.UseHttpsRedirection();
