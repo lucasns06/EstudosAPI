@@ -62,5 +62,12 @@ E depois
    dotnet run
 ```
 
+Link da API no SOMEE
 
+[SOMEE](http://lucasns06.somee.com/EstudosApi/Tarefas/GetAll)
+
+Link da API no AZURE
+
+[AZURE](https://estudosapi.azurewebsites.net/Tarefas/GetAll
+)
 
