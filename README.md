@@ -64,7 +64,7 @@ E depois
 
 Link da API no SOMEE
 
-[SOMEE](http://lucasns06.somee.com/EstudosApi/Tarefas/GetAll)
+[SOMEE](http://estudosapi.somee.com/EstudosApi/Tarefas/GetAll)
 
 Link da API no AZURE
 
