@@ -16,10 +16,8 @@ namespace TarefasApi.Models
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public DateTime? DataAcesso { get; set; }
-        
         [NotMapped] // DataAnnotations
         public string PasswordString { get; set; } = string.Empty;
-        
         public List<Categoria> Categorias { get; set; } = new List<Categoria>();
         public string Perfil { get; set; } = string.Empty;
         public string? Email { get; set; }

@@ -21,15 +21,15 @@ namespace TarefasApi.Data
             modelBuilder.Entity<Categoria>().ToTable("TB_CATEGORIAS");
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
             //relacionamento
-             modelBuilder.Entity<Usuario>()
-            .HasMany(e => e.Categorias)
-            .WithOne(e => e.Usuario)
-            .HasForeignKey(e => e.UsuarioId)
-            .IsRequired(false);
+            modelBuilder.Entity<Usuario>()
+           .HasMany(e => e.Categorias)
+           .WithOne(e => e.Usuario)
+           .HasForeignKey(e => e.UsuarioId)
+           .IsRequired(false);
 
             modelBuilder.Entity<Categoria>()
-                .HasMany(c => c.Tarefas)  
-                .WithOne(t => t.Categoria) 
+                .HasMany(c => c.Tarefas)
+                .WithOne(t => t.Categoria)
                 .HasForeignKey(t => t.CategoriaId);
 
             modelBuilder.Entity<Categoria>().HasData
@@ -44,7 +44,7 @@ namespace TarefasApi.Data
                 new Tarefa { Id = 2, DataTermino = "11/10", Nome = "Revisar Física", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
                 new Tarefa { Id = 3, DataTermino = "28/11", Nome = "Regra de três", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
             );
-            
+
             Usuario user = new Usuario();
             Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
             user.Id = 1;
@@ -58,6 +58,10 @@ namespace TarefasApi.Data
             user.Longitude = -46.596498;
 
             modelBuilder.Entity<Usuario>().HasData(user);
+
+            
+            //Define que se o Perfil não for informado, o valor padrão será jogador
+            modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
 
             base.OnModelCreating(modelBuilder);
         }
