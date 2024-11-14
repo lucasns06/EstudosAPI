@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EstudosAPI.Utils;
 using Microsoft.EntityFrameworkCore;
 using TarefasApi.Models;
 using TarefasApi.Models.Enums;
@@ -18,8 +19,15 @@ namespace TarefasApi.Data
         {
             modelBuilder.Entity<Tarefa>().ToTable("TB_TAREFAS");
             modelBuilder.Entity<Categoria>().ToTable("TB_CATEGORIAS");
+            modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
+            //relacionamento
+             modelBuilder.Entity<Usuario>()
+            .HasMany(e => e.Categorias)
+            .WithOne(e => e.Usuario)
+            .HasForeignKey(e => e.UsuarioId)
+            .IsRequired(false);
 
-              modelBuilder.Entity<Categoria>()
+            modelBuilder.Entity<Categoria>()
                 .HasMany(c => c.Tarefas)  
                 .WithOne(t => t.Categoria) 
                 .HasForeignKey(t => t.CategoriaId);
@@ -36,7 +44,20 @@ namespace TarefasApi.Data
                 new Tarefa { Id = 2, DataTermino = "11/10", Nome = "Revisar Física", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
                 new Tarefa { Id = 3, DataTermino = "28/11", Nome = "Regra de três", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
             );
+            
+            Usuario user = new Usuario();
+            Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
+            user.Id = 1;
+            user.Nome = "UsuarioAdmin";
+            user.PasswordString = string.Empty;
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
+            user.Perfil = "Admin";
+            user.Email = "seuEmail@gmail.com";
+            user.Latitude = -23.5200241;
+            user.Longitude = -46.596498;
 
+            modelBuilder.Entity<Usuario>().HasData(user);
 
             base.OnModelCreating(modelBuilder);
         }
