@@ -14,12 +14,14 @@ namespace TarefasApi.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Tarefa> TB_TAREFAS { get; set; }
         public DbSet<Categoria> TB_CATEGORIAS { get; set; }
+        public DbSet<Usuario> TB_USUARIOS { get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Tarefa>().ToTable("TB_TAREFAS");
             modelBuilder.Entity<Categoria>().ToTable("TB_CATEGORIAS");
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
+
             //relacionamento
             modelBuilder.Entity<Usuario>()
            .HasMany(e => e.Categorias)
