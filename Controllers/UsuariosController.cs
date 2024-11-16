@@ -18,7 +18,7 @@ namespace EstudosAPI.Controllers
         {
             _context = context;
         }
-          private async Task<bool> UsuarioExistente(string username)
+         private async Task<bool> UsuarioExistente(string username)
         {
             if (await _context.TB_USUARIOS.AnyAsync(x => x.Nome.ToLower() == username.ToLower()))
             {

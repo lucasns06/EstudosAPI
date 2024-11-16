@@ -31,7 +31,7 @@ namespace TarefasApi.Controllers
 
             var lista = await _context.TB_TAREFAS
             .Include(t => t.Categoria)
-             .Select(t => new
+            .Select(t => new
              {
                  t.Id,
                  t.DataTermino,

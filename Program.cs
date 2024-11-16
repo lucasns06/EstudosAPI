@@ -12,7 +12,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
+    options.AddPolicy("AllowGitHubPages",
         builder => builder
             .WithOrigins("https://lucasns06.github.io") // Adicione o domínio do seu GitHub Pages
             .AllowAnyMethod()
