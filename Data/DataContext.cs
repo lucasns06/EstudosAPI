@@ -42,15 +42,15 @@ namespace TarefasApi.Data
 
             modelBuilder.Entity<Tarefa>().HasData
             (
-                new Tarefa { Id = 1, DataTermino = "05/10", Nome = "Estudar Matemática", Prioridade = PrioridadeEnum.ALTA, Completo = false, CategoriaId = 1 },
-                new Tarefa { Id = 2, DataTermino = "11/10", Nome = "Revisar Física", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
-                new Tarefa { Id = 3, DataTermino = "28/11", Nome = "Regra de três", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
+                new Tarefa { Id = 1, Nome = "Estudar Matemática", DataTermino = "05/10",  Prioridade = PrioridadeEnum.ALTA, Completo = false, CategoriaId = 1 },
+                new Tarefa { Id = 2, Nome = "Revisar Física", DataTermino = "11/10", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
+                new Tarefa { Id = 3, Nome = "Regra de três", DataTermino = "28/11", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
             );
 
             Usuario user = new Usuario();
             Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
             user.Id = 1;
-            user.Nome = "UsuarioAdmin";
+            user.Username = "UsuarioAdmin";
             user.PasswordString = string.Empty;
             user.PasswordHash = hash;
             user.PasswordSalt = salt;

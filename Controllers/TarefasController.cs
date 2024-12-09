@@ -34,8 +34,8 @@ namespace TarefasApi.Controllers
             .Select(t => new
              {
                  t.Id,
-                 t.DataTermino,
                  t.Nome,
+                 t.DataTermino,
                  t.Prioridade,
                  t.Completo,
                  t.CategoriaId,
