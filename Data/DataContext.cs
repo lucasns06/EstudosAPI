@@ -22,30 +22,17 @@ namespace TarefasApi.Data
             modelBuilder.Entity<Categoria>().ToTable("TB_CATEGORIAS");
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
 
-            //relacionamento
             modelBuilder.Entity<Usuario>()
            .HasMany(e => e.Categorias)
            .WithOne(e => e.Usuario)
            .HasForeignKey(e => e.UsuarioId)
-           .IsRequired(false);
+           .IsRequired(true);
 
             modelBuilder.Entity<Categoria>()
                 .HasMany(c => c.Tarefas)
                 .WithOne(t => t.Categoria)
                 .HasForeignKey(t => t.CategoriaId);
 
-            modelBuilder.Entity<Categoria>().HasData
-            (
-                new Categoria { Id = 1, Nome = "Matematica" },
-                new Categoria { Id = 2, Nome = "Fisica" }
-            );
-
-            modelBuilder.Entity<Tarefa>().HasData
-            (
-                new Tarefa { Id = 1, Nome = "Estudar Matemática", DataTermino = "05/10",  Prioridade = PrioridadeEnum.ALTA, Completo = false, CategoriaId = 1 },
-                new Tarefa { Id = 2, Nome = "Revisar Física", DataTermino = "11/10", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
-                new Tarefa { Id = 3, Nome = "Regra de três", DataTermino = "28/11", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
-            );
 
             Usuario user = new Usuario();
             Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[] salt);
@@ -61,6 +48,18 @@ namespace TarefasApi.Data
 
             modelBuilder.Entity<Usuario>().HasData(user);
 
+            modelBuilder.Entity<Categoria>().HasData
+            (
+                new Categoria { Id = 1, Nome = "Matematica", UsuarioId = user.Id},
+                new Categoria { Id = 2, Nome = "Fisica", UsuarioId = user.Id }
+            );
+
+            modelBuilder.Entity<Tarefa>().HasData
+            (
+                new Tarefa { Id = 1, Nome = "Estudar Matemática", DataTermino = "05/10",  Prioridade = PrioridadeEnum.ALTA, Completo = false, CategoriaId = 1},
+                new Tarefa { Id = 2, Nome = "Revisar Física", DataTermino = "11/10", Prioridade = PrioridadeEnum.MEDIA, Completo = false, CategoriaId = 2 },
+                new Tarefa { Id = 3, Nome = "Regra de três", DataTermino = "28/11", Prioridade = PrioridadeEnum.BAIXA, Completo = false, CategoriaId = 1 }
+            );
             
             //Define que se o Perfil não for informado, o valor padrão será jogador
             modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");

@@ -68,7 +68,7 @@ namespace TarefasApi.Controllers
             {
                 if (categoria != null)
                 {
-                     categoria.Tarefas = null;
+                    categoria.Tarefas = null;
                      
                     await _context.TB_CATEGORIAS.AddAsync(categoria);
                     await _context.SaveChangesAsync();
