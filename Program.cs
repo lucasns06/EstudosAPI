@@ -14,7 +14,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowGitHubPages",
         builder => builder
-            .WithOrigins("https://lucasns06.github.io") // Adicione o domínio do seu GitHub Pages
+            .WithOrigins("https://lucasns06.github.io") 
             .AllowAnyMethod()
             .AllowAnyHeader());
 });

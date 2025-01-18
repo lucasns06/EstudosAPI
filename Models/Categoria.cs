@@ -13,6 +13,6 @@ namespace TarefasApi.Models
         public ICollection<Tarefa> Tarefas { get; set; } = new List<Tarefa>();
         public int? UsuarioId { get; set; }
         [JsonIgnore]
-        public Usuario Usuario { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }
