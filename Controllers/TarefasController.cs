@@ -20,34 +20,54 @@ namespace TarefasApi.Controllers
         {
             _context = context;
         }
+        // [HttpGet("GetAll")]
+        // public async Task<ActionResult> GetTarefas() //Async: método assincrono
+        // {
 
-        /// <summary>
-        /// Esse método pega todas as tarefas
-        /// </summary>
-        /// <returns>Retornar todas as tarefas</returns>
-        [HttpGet("GetAll")]
-        public async Task<ActionResult> GetTarefas() //Async: método assincrono
+        //     var lista = await _context.TB_TAREFAS
+        //     .Include(t => t.Categoria)
+        //     .Select(t => new
+        //      {
+        //          t.Id,
+        //          t.Nome,
+        //          t.DataTermino,
+        //          t.Prioridade,
+        //          t.Completo,
+        //          t.CategoriaId,
+        //          Categoria = new
+        //          {
+        //              t.Categoria.Id,
+        //              t.Categoria.Nome
+        //          }
+        //      })
+        //     .ToListAsync();
+        //      // Retorna todas as tarefas
+        //     return Ok(lista);
+        // }
+        [HttpGet("GetByUsuario2/{usuarioId}")]
+        public async Task<IActionResult> GetTarefasPorCategorias(int usuarioId)  // Mudando para usuarioId
         {
+            try
+            {
+                // Filtra as categorias de um usuário específico
+                List<Tarefa> tarefas = await _context.TB_TAREFAS
+                    .Where(c => c.Categoria.UsuarioId == usuarioId)  // Usa usuarioId para filtrar tarefas
+                    .Include(t => t.Categoria)
+                    .ToListAsync();
 
-            var lista = await _context.TB_TAREFAS
-            .Include(t => t.Categoria)
-            .Select(t => new
-             {
-                 t.Id,
-                 t.Nome,
-                 t.DataTermino,
-                 t.Prioridade,
-                 t.Completo,
-                 t.CategoriaId,
-                 Categoria = new
-                 {
-                     t.Categoria.Id,
-                     t.Categoria.Nome
-                 }
-             })
-            .ToListAsync();
-             // Retorna todas as tarefas
-            return Ok(lista);
+                if (tarefas != null && tarefas.Any())
+                {
+                    return Ok(tarefas);
+                }
+                else
+                {
+                    return Ok(new List<Tarefa>());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + " - " + ex.InnerException);
+            }
         }
 
         [HttpGet("{id}")]

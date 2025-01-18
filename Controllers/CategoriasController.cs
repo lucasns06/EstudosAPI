@@ -23,6 +23,33 @@ namespace TarefasApi.Controllers
         /// testando 
         /// </summary>
         /// <returns>testando 2</returns>
+        [HttpGet("GetByUsuario/{usuarioId}")]
+        public async Task<IActionResult> GetCategoriasPorUsuario(int usuarioId)
+        {
+            try
+            {
+                // Filtra as categorias de um usuário específico
+                List<Categoria> categorias = await _context.TB_CATEGORIAS
+                    .Where(c => c.UsuarioId == usuarioId)  // Filtra pelo UsuarioId
+                    .Include(t => t.Tarefas)
+                    .ToListAsync();
+
+                if (categorias != null && categorias.Any())
+                {
+                    return Ok(categorias);
+                }
+                else
+                {
+                    return Ok(new List<Categoria>()); // Retorna uma lista vazia se não houver categorias
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + " - " + ex.InnerException);
+            }
+        }
+
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -68,8 +95,13 @@ namespace TarefasApi.Controllers
             {
                 if (categoria != null)
                 {
-                    categoria.Tarefas = null;
-                     
+                    if (categoria.UsuarioId == 0)
+                    {
+                        return BadRequest("O ID do usuário é necessário.");
+                    }
+
+                    categoria.Tarefas = null; 
+
                     await _context.TB_CATEGORIAS.AddAsync(categoria);
                     await _context.SaveChangesAsync();
 
@@ -85,6 +117,9 @@ namespace TarefasApi.Controllers
                 return BadRequest(ex.Message + " - " + ex.InnerException);
             }
         }
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteById(int id)
